@@ -12,10 +12,13 @@ describe("filter()", () => {
       userEmail: "",
       apiToken: "",
     }
-    const check = async (id: string, dst: string): Promise<boolean> =>
-      id.startsWith("KNOWN") && dst == "exist"
-    await expect(filter(transitions, config, check)).resolves.toEqual({
-      "KNOWN-123": "exist",
+    const resolve = async (
+      id: string,
+      dst: string
+    ): Promise<string | undefined> =>
+      id.startsWith("KNOWN") && dst == "exist" ? "dstId" : undefined
+    await expect(filter(transitions, config, resolve)).resolves.toEqual({
+      "KNOWN-123": "dstId",
     })
   })
 })

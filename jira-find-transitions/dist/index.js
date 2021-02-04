@@ -1,4 +1,4 @@
-require('./sourcemap-register.js');module.exports =
+module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -30,62 +30,32 @@ exports.extract = extract;
 /***/ }),
 
 /***/ 355:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.filter = void 0;
-const url_1 = __nccwpck_require__(835);
-const node_fetch_1 = __importStar(__nccwpck_require__(372));
-const getCredentials = (config) => Buffer.from(`${config.userEmail}:${config.apiToken}`).toString("base64");
-const sendRequest = async (path, config, method = "GET") => {
-    const url = new url_1.URL(path, config.baseUrl);
-    const headers = new node_fetch_1.Headers();
-    headers.set("Content-Type", "application/json");
-    headers.set("Authorization", `Basic ${getCredentials(config)}`);
-    return await node_fetch_1.default(url, { method, headers });
-};
+const jira_1 = __nccwpck_require__(877);
 /** Check if the issue id exists and there is the specified destination. */
-const fetchIssue = async (id, dst, config) => {
-    const resp = await sendRequest(`/rest/api/2/issue/${id}/transitions`, config);
+const fetchTransitionId = async (id, dstName, config) => {
+    const resp = await jira_1.sendRequest(`/rest/api/2/issue/${id}/transitions`, config);
     // If the id does not exist, 404 not found is returned.
     if (resp.status !== 200)
-        return false;
-    // Validate the destination.
+        return;
     const body = JSON.parse(await resp.text());
     const transitions = body.transitions;
-    return transitions.map(t => t.name.toLowerCase()).includes(dst.toLowerCase());
+    const transition = transitions.find(t => t.name.toLowerCase() === dstName.toLowerCase());
+    return transition === null || transition === void 0 ? void 0 : transition.id;
 };
 /** Remove unknown issue ids from the given transitions */
-const filter = async (transitions, config, check = fetchIssue) => {
+const filter = async (transitions, config, resolveTransitionId = fetchTransitionId) => {
     const extractedIds = Object.keys(transitions);
-    const isExist = await Promise.all(extractedIds.map(id => check(id, transitions[id], config)));
-    return extractedIds
-        .filter((_, i) => isExist[i])
-        .reduce((acc, id) => ({
-        ...acc,
-        [id]: transitions[id],
-    }), {});
+    const destinationIds = await Promise.all(extractedIds.map(id => resolveTransitionId(id, transitions[id], config)));
+    return extractedIds.reduce((acc, id, i) => {
+        const dstId = destinationIds[i];
+        return dstId ? { ...acc, [id]: dstId } : acc;
+    }, {});
 };
 exports.filter = filter;
 //# sourceMappingURL=filter.js.map
@@ -2190,6 +2160,52 @@ exports.FetchError = FetchError;
 
 /***/ }),
 
+/***/ 877:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.sendRequest = void 0;
+const url_1 = __nccwpck_require__(835);
+const node_fetch_1 = __importStar(__nccwpck_require__(372));
+const getCredentials = (config) => Buffer.from(`${config.userEmail}:${config.apiToken}`).toString("base64");
+const sendRequest = async (path, config, options = { method: "GET", body: undefined }) => {
+    const url = new url_1.URL(path, config.baseUrl);
+    const headers = new node_fetch_1.Headers();
+    headers.set("Content-Type", "application/json");
+    headers.set("Authorization", `Basic ${getCredentials(config)}`);
+    const body = options.body ? JSON.stringify(options.body) : undefined;
+    return await node_fetch_1.default(url, {
+        method: options.method,
+        headers,
+        body,
+    });
+};
+exports.sendRequest = sendRequest;
+
+
+/***/ }),
+
 /***/ 903:
 /***/ ((module) => {
 
@@ -2303,4 +2319,3 @@ module.exports = require("zlib");;
 /******/ 	return __nccwpck_require__(661);
 /******/ })()
 ;
-//# sourceMappingURL=index.js.map

@@ -5,16 +5,13 @@
   "description": "Extract transition declarations from string",
   "main": "lib/main.js",
   "scripts": {
-    "compile": "tsc",
-    "package": "ncc build --source-map --license licenses.txt",
-    "build": "run-s compile package"
+    "clean": "rm -fr dist",
+    "compile": "tsc -b tsconfig.json",
+    "package": "ncc build --license licenses.txt",
+    "build": "run-s clean compile package"
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
-    "@types/node-fetch": "^2.5.8"
-  },
-  "prettier": "@flywheel-jp/prettier-config"
+    "common": "./common"
+  }
 }

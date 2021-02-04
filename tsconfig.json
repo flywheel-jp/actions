@@ -3,6 +3,10 @@
   "compilerOptions": {
     "declaration": false,
     "noEmitOnError": false,
+    "baseUrl": ".",
+    "paths": {
+      "common/*": ["common/src/*"],
+    },
   },
   "exclude": ["node_modules", "**/*.test.ts"]
 }

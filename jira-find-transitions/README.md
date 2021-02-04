@@ -5,7 +5,7 @@
 ## Usage
 
 ```yaml
-- uses: flywheel-jp/actions/jira-find-transitions@master
+- uses: flywheel-jp/actions/jira-find-transitions@main
   id: transitions
   with:
     jira_base_url: ${{ secrets.JIRA_BASE_URL }}

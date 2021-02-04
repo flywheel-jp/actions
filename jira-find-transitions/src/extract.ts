@@ -1,4 +1,4 @@
-import { Transitions } from "./types"
+import { Transitions } from "common/jira"
 
 const REGEXP = /Moves? (?:(?<id1>[a-zA-Z0-9]{2,}-[0-9]+)|(?:\[(?<id2>[a-zA-Z0-9]{2,}-[0-9]+)\](?:\(.+\))?)) to (?<dst>[^,\.\r\n]+)/gi
 

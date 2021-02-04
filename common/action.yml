@@ -1,0 +1,16 @@
+name: "jira-perform-transitions"
+description: "Transition Jira issues"
+author: "FLYWHEEL"
+inputs:
+  jira_base_url:
+    required: true
+  jira_user_email:
+    required: true
+  jira_api_token:
+    required: true
+  transitions:
+    required: true
+    description: "Mapping from Jira issue key to associated destination"
+runs:
+  using: "node12"
+  main: "./dist/index.js"
