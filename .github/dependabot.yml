@@ -1,6 +1,18 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/jira-find-transitions'
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: 'daily'
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/common"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/jira-find-transitions"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "/jira-move-issues"
+    schedule:
+      interval: "daily"
