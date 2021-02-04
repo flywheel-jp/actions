@@ -14,4 +14,8 @@ describe("extract()", () => {
       "IJK-45": "hoge",
     })
   })
+
+  it("returns an empty object if nothing found", () => {
+    expect(extract("")).toEqual({})
+  })
 })
