@@ -1,0 +1,8 @@
+{
+  "extends": "@flywheel-jp/tsconfig/nodejs12",
+  "compilerOptions": {
+    "declaration": false,
+    "noEmitOnError": false,
+  },
+  "exclude": ["node_modules", "**/*.test.ts"]
+}
