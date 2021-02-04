@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,7 +19,9 @@ jobs:
           node-version: ${{ steps.nodejs-version.outputs.version}}
       - name: Install dependencies
         run: yarn --frozen-lockfile
+      - name: Run unit tests
+        run: yarn test
       - name: Build all workspaces
-        run: yarn workspaces run build
+        run: yarn build
       - name: Test if all build artifacts are committed
         run: git diff --quiet
