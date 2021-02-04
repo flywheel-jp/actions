@@ -1,0 +1,6 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/jira-find-transitions'
+    schedule:
+      interval: 'daily'

@@ -1,0 +1,13 @@
+name: "jira-find-transitions"
+description: "Extract transition declarations from string"
+author: "FLYWHEEL"
+inputs:
+  string: # change this
+    required: true
+    description: "Provide a string to extract transition declarations from"
+outputs:
+  transitions:
+    description: "Mapping from Jira issue key to associated destination"
+runs:
+  using: "node12"
+  main: "./dist/index.js"

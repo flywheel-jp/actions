@@ -1,0 +1,25 @@
+name: Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get nodejs version
+        id: nodejs-version
+        run: echo "::set-output name=version::$(cat .node-version)"
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ steps.nodejs-version.outputs.version}}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Build all workspaces
+        run: yarn workspaces run build
+      - name: Test if all build artifacts are committed
+        run: git diff --quiet
