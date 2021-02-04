@@ -13,7 +13,7 @@ inputs:
     description: "Provide a string to extract transition declarations from"
 outputs:
   transitions:
-    description: "Mapping from Jira issue key to associated destination"
+    description: "Mapping from a Jira issue id to the associated destination id"
 runs:
   using: "node12"
   main: "./dist/index.js"

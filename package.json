@@ -5,10 +5,10 @@
   },
   "scripts": {
     "build": "yarn workspaces run build",
-    "format": "prettier **/*.ts",
+    "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint **/*.ts",
-    "jest": "yarn workspaces run jest",
+    "jest": "jest",
     "test": "run-s format-check lint jest"
   },
   "devDependencies": {
@@ -30,8 +30,11 @@
   },
   "workspaces": {
     "packages": [
-      "jira-find-transitions"
+      "common",
+      "jira-find-transitions",
+      "jira-move-issues"
     ],
     "nohoist": []
-  }
+  },
+  "prettier": "@flywheel-jp/prettier-config"
 }
