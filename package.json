@@ -31,7 +31,8 @@
   "workspaces": {
     "packages": [
       "common",
-      "jira-find-transitions"
+      "jira-find-transitions",
+      "jira-perform-transitions"
     ],
     "nohoist": []
   },

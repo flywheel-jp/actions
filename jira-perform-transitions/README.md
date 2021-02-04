@@ -1,12 +1,12 @@
-# Jira Find Transitions
+# Jira Perform Transitions
 
-> Extract transition declarations from string.
+> Perform transitions.
 
 ## Usage
 
 ```yaml
 - uses: flywheel-jp/actions/jira-find-transitions@main
-  id: transitions
+  id: find
   with:
     jira_base_url: ${{ secrets.JIRA_BASE_URL }}
     jira_user_email: ${{ secrets.JIRA_USER_EMAIL }}
@@ -16,6 +16,10 @@
       Move ABC-123 to ToDo
       Move UNKNOWN-4 to Done
       Move JIRA-12 to not exist
-# Becomes: 'echo {"JIRA-1":"_ID_","ABC-123":"_ID_"}'
-- run: echo ${{ steps.transitions.outputs.transitions }}
+- uses: flywheel-jp/actions/jira-perform-transitions@main
+  with:
+    jira_base_url: ${{ secrets.JIRA_BASE_URL }}
+    jira_user_email: ${{ secrets.JIRA_USER_EMAIL }}
+    jira_api_token: ${{ secrets.JIRA_API_TOKEN }}
+    transitions: ${{ steps.find.outputs.transitions }}
 ```

@@ -1,0 +1,17 @@
+{
+  "name": "jira-perform-transitions",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Perform transitions",
+  "main": "lib/main.js",
+  "scripts": {
+    "clean": "rm -fr dist",
+    "compile": "tsc -b tsconfig.json",
+    "package": "ncc build --license licenses.txt",
+    "build": "run-s clean compile package"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "common": "./common"
+  }
+}
