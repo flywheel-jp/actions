@@ -1,4 +1,4 @@
-name: "jira-perform-transitions"
+name: "jira-move-issues"
 description: "Transition Jira issues"
 author: "FLYWHEEL"
 inputs:
