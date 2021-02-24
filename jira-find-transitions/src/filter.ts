@@ -8,10 +8,15 @@ const fetchTransitionId = async (
 ): Promise<string | undefined> => {
   const resp = await sendRequest(`/rest/api/2/issue/${id}/transitions`, config)
 
-  // If the id does not exist, 404 not found is returned.
-  if (resp.status !== 200) return
-
   const body = JSON.parse(await resp.text())
+
+  // If the id does not exist, 404 not found is returned.
+  if (resp.status !== 200) {
+    console.warn(`Id: ${id}, Response: ${resp.status}`)
+    console.debug(`Body: ${JSON.stringify(body)}`)
+    return
+  }
+
   const transitions: { id: string; name: string }[] = body.transitions
   const transition = transitions.find(
     t => t.name.toLowerCase() === dstName.toLowerCase()

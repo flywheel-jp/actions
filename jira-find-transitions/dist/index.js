@@ -40,10 +40,13 @@ const jira_1 = __nccwpck_require__(877);
 /** Check if the issue id exists and there is the specified destination. */
 const fetchTransitionId = async (id, dstName, config) => {
     const resp = await jira_1.sendRequest(`/rest/api/2/issue/${id}/transitions`, config);
-    // If the id does not exist, 404 not found is returned.
-    if (resp.status !== 200)
-        return;
     const body = JSON.parse(await resp.text());
+    // If the id does not exist, 404 not found is returned.
+    if (resp.status !== 200) {
+        console.warn(`Id: ${id}, Response: ${resp.status}`);
+        console.debug(`Body: ${JSON.stringify(body)}`);
+        return;
+    }
     const transitions = body.transitions;
     const transition = transitions.find(t => t.name.toLowerCase() === dstName.toLowerCase());
     return transition === null || transition === void 0 ? void 0 : transition.id;
@@ -98,7 +101,7 @@ async function run() {
             apiToken: core.getInput("jira_api_token"),
         };
         const transitions = extract_1.extract(core.getInput("string"));
-        console.debug(`Extracted transitions: ${transitions}`);
+        console.debug(`Extracted transitions: ${JSON.stringify(transitions)}`);
         core.setOutput("transitions", await filter_1.filter(transitions, config));
     }
     catch (error) {

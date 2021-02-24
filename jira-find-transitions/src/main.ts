@@ -10,7 +10,7 @@ async function run(): Promise<void> {
       apiToken: core.getInput("jira_api_token"),
     }
     const transitions = extract(core.getInput("string"))
-    console.debug(`Extracted transitions: ${transitions}`)
+    console.debug(`Extracted transitions: ${JSON.stringify(transitions)}`)
     core.setOutput("transitions", await filter(transitions, config))
   } catch (error) {
     core.setFailed(error.message)
