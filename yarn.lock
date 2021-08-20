@@ -616,10 +616,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^14.14.9":
-  version "14.14.24"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.24.tgz#541c00e4f7c41c8f108bd5b045248b5224c62946"
-  integrity sha512-6BAlkS4seVjszhrwN0W1WabqWwuJwcYF36Z1rPPyQm80LGRKsIeUPdzI51TezXenjetFNy1gRTpuDn1NBg33LA==
+"@types/node@*", "@types/node@^16.7.0":
+  version "16.7.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.0.tgz#f0374c4e89d1fc1ef705caad3021ba34c1a9294c"
+  integrity sha512-e66BrnjWQ3BRBZ2+iA5e85fcH9GLNe4S0n1H0T3OalK2sXg5XWEFTO4xvmGrYQ3edy+q6fdOh5t0/HOY8OAqBg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
